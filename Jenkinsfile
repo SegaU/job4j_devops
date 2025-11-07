@@ -64,7 +64,7 @@ pipeline {
 			script {
 				def buildInfo = "Build number: ${currentBuild.number}\n" +
 				"Build status: ${currentBuild.currentResult}\n" +
-				"Started at: ${newDate(currentBuild.startTimeInMillis)}\n" +
+				"Started at: ${new Date(currentBuild.startTimeInMillis)}\n" +
 				"Duration so far: ${currentBuild.durationString}"
 				telegramSend(message: buildInfo)
 			}
