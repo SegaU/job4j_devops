@@ -1,6 +1,20 @@
 pipeline {
-	pipeline {
-		agent  any
+	agent {
+		label 'agent1'
+	}
+
+	tools {
+		git 'Default'
+	}
+
+	stages {
+		stage('Prepare Environment') {
+			steps {
+				script {
+					sh 'chmod +x ./gradlew'
+				}
+			}
+		}
 
 		stages {
 			stage('Build') {
@@ -32,6 +46,7 @@ pipeline {
 				}
 			}
 		}
+
 	}
 
 	post {
@@ -46,4 +61,3 @@ pipeline {
 		}
 	}
 }
-
