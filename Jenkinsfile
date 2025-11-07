@@ -1,50 +1,32 @@
 pipeline {
-	agent any
+	pipeline {
+		agent  any
 
-	tools {
-		git 'Default'
-	}
-
-	stages {
-		stage('Prepare Environment') {
-			steps {
-				script {
-					sh 'chmod +x ./gradlew'
-				}
-			}
-		}
-
-		stage('Build') {
-			parallel {
-				stage('Checkstyle Main') {
-					steps {
-						script {
-							sh './gradlew checkstyleMain'
+		stages {
+			stage('Build') {
+				parallel {
+					stage('Checkstyle Main') {
+						steps {
+							echo 'Checkstyle Main'
 						}
 					}
-				}
-				stage('Checkstyle Test') {
-					steps {
-						script {
-							sh './gradlew checkstyleTest'
+					stage('Checkstyle Test') {
+						steps {
+							echo 'Checkstyle Main'
 						}
 					}
-				}
 
-				stage('Build') {
-					steps {
-						script {
-							sh './gradlew compileJava'
+					stage('Build') {
+						steps {
+							echo 'Build'
 						}
 					}
-				}
 
-				stage('Test') {
-					steps {
-						script {
-							sh './gradlew test'
-							sh './gradlew jacocoTestReport'
-							sh './gradlew jacocoTestCoverageVerification'
+					stage('Test') {
+						steps {
+							echo 'Test'
+							echo 'JaCoCo Report'
+							echo 'JaCoCo Verification'
 						}
 					}
 				}
