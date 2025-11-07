@@ -16,37 +16,34 @@ pipeline {
 			}
 		}
 
-		stages {
-			stage('Build') {
-				parallel {
-					stage('Checkstyle Main') {
-						steps {
-							echo 'Checkstyle Main'
-						}
+		stage('Build') {
+			parallel {
+				stage('Checkstyle Main') {
+					steps {
+						echo 'Checkstyle Main'
 					}
-					stage('Checkstyle Test') {
-						steps {
-							echo 'Checkstyle Main'
-						}
+				}
+				stage('Checkstyle Test') {
+					steps {
+						echo 'Checkstyle Main'
 					}
+				}
 
-					stage('Build') {
-						steps {
-							echo 'Build'
-						}
+				stage('Build') {
+					steps {
+						echo 'Build'
 					}
+				}
 
-					stage('Test') {
-						steps {
-							echo 'Test'
-							echo 'JaCoCo Report'
-							echo 'JaCoCo Verification'
-						}
+				stage('Test') {
+					steps {
+						echo 'Test'
+						echo 'JaCoCo Report'
+						echo 'JaCoCo Verification'
 					}
 				}
 			}
 		}
-
 	}
 
 	post {
