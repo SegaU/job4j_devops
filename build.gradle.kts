@@ -4,6 +4,7 @@ plugins {
 	jacoco
 	alias(libs.plugins.spring.boot)
 	alias(libs.plugins.spring.dependency.management)
+	alias(libs.plugins.spotbugs)
 }
 
 group = "ru.job4j.devops"
@@ -49,6 +50,17 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
+tasks.spotbugsMain {
+    reports.create("html") {
+        required = true
+        outputLocation.set(layout.buildDirectory.file("reports/spotbugs/spotbugs.html"))
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.spotbugsMain)
+}
+
 tasks.register<Zip>("zipJavaDoc") {
     group = "documentation" // Группа, в которой будет отображаться задача
     description = "Packs the generated Javadoc into a zip archive"
@@ -59,4 +71,5 @@ tasks.register<Zip>("zipJavaDoc") {
     archiveFileName.set("javadoc.zip") // Имя создаваемого архива
     destinationDirectory.set(layout.buildDirectory.dir("archives")) // Директория, куда будет сохранен архив
 }
+
 
