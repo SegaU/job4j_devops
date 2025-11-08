@@ -15,32 +15,45 @@ pipeline {
 				}
 			}
 		}
-
-		stage('Build') {
-			parallel {
-				stage('Checkstyle Main') {
-					steps {
-						echo 'Checkstyle Main'
-					}
+		stage('Checkstyle Main') {
+			steps {
+				script {
+					sh './gradlew checkstyleMain'
 				}
-				stage('Checkstyle Test') {
-					steps {
-						echo 'Checkstyle Main'
-					}
+			}
+		}
+		stage('Checkstyle Test') {
+			steps {
+				script {
+					sh './gradlew checkstyleTest'
 				}
-
-				stage('Build') {
-					steps {
-						echo 'Build'
-					}
+			}
+		}
+		stage('Compile') {
+			steps {
+				script {
+					sh './gradlew compileJava'
 				}
-
-				stage('Test') {
-					steps {
-						echo 'Test'
-						echo 'JaCoCo Report'
-						echo 'JaCoCo Verification'
-					}
+			}
+		}
+		stage('Test') {
+			steps {
+				script {
+					sh './gradlew test'
+				}
+			}
+		}
+		stage('JaCoCo Report') {
+			steps {
+				script {
+					sh './gradlew jacocoTestReport'
+				}
+			}
+		}
+		stage('JaCoCo Verification') {
+			steps {
+				script {
+					sh './gradlew jacocoTestCoverageVerification'
 				}
 			}
 		}
